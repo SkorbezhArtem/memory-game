@@ -3,6 +3,8 @@ import { createHeader } from './components/header.js';
 import { createStatusPanel } from './components/status.js';
 import { createBoard } from './components/board.js';
 import { createModal } from './components/modal.js';
+import { saveScore } from './state/storage.js';
+import { showLeaderboardModal } from './components/leaderboard.js';
 
 const ITEMS = [
   { key: 'blink-dagger', name: 'Blink Dagger', image: './assets/items/blink.png' },
@@ -43,6 +45,8 @@ const initApp = () => {
   };
 
   const showWinModal = (finalMoves) => {
+    saveScore({ moves: finalMoves });
+
     const text = createElement('p', {
       className: 'win-modal__text',
       text: 'Congratulations! You have restored all 8 ancient artifacts!',
@@ -138,7 +142,9 @@ const initApp = () => {
 
   const header = createHeader({
     onNewGame: resetGame,
-    onLeaderboard: () => { },
+    onLeaderboard: () => {
+      showLeaderboardModal();
+    },
   });
 
   const statusPanel = createStatusPanel();

@@ -602,3 +602,127 @@ body {
   color: var(--text-gold-bright);
   text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
+
+.leaderboard-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.leaderboard-th {
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-gold-glow);
+}
+
+.leaderboard-th--rank {
+  width: 70px;
+  text-align: center;
+}
+
+.leaderboard-th--moves {
+  text-align: center;
+}
+
+.leaderboard-th--date {
+  text-align: right;
+}
+
+.leaderboard-tr {
+  transition: background var(--transition-smooth);
+}
+
+.leaderboard-tr:hover {
+  background: rgba(200, 155, 60, 0.08);
+}
+
+.leaderboard-td {
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: var(--text-gold);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-td--rank {
+  text-align: center;
+}
+
+.leaderboard-td--moves {
+  text-align: center;
+  font-weight: 700;
+  color: var(--text-gold-bright);
+}
+
+.leaderboard-td--date {
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.leaderboard-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-gold);
+}
+
+.leaderboard-rank--first {
+  background: radial-gradient(circle at center, #ffd700 0%, #b8860b 100%);
+  border-color: #ffe066;
+  color: #1a1200;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.leaderboard-rank--second {
+  background: radial-gradient(circle at center, #e0e4eb 0%, #9aa0a6 100%);
+  border-color: #ffffff;
+  color: #11151a;
+  box-shadow: 0 0 8px rgba(200, 210, 225, 0.5);
+}
+
+.leaderboard-rank--third {
+  background: radial-gradient(circle at center, #cd7f32 0%, #8c4a16 100%);
+  border-color: #e59850;
+  color: #1a0a00;
+  box-shadow: 0 0 8px rgba(205, 127, 50, 0.5);
+}
+
+.leaderboard-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px;
+  gap: 10px;
+}
+
+.leaderboard-empty__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-gold-bright);
+}
+
+.leaderboard-empty__desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 320px;
+  line-height: 1.5;
+}
