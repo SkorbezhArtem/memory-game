@@ -459,3 +459,103 @@ body {
     padding: 2px 1px;
   }
 }
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(4, 6, 12, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal__dialog {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-panel);
+  border: 2px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  box-shadow: 
+    inset 0 0 25px rgba(200, 155, 60, 0.15),
+    0 16px 48px rgba(0, 0, 0, 0.9);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transform: scale(0.92) translateY(8px);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-backdrop.is-open .modal__dialog {
+  transform: scale(1) translateY(0);
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-gold-glow);
+  padding-bottom: 12px;
+}
+
+.modal__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-gold-bright);
+  text-shadow: 0 0 10px rgba(200, 155, 60, 0.5);
+}
+
+.modal__close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.modal__close-btn:hover {
+  color: var(--text-gold-bright);
+  transform: scale(1.15);
+}
+
+.modal__body {
+  font-size: 1rem;
+  color: var(--text-gold);
+  line-height: 1.6;
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid var(--border-gold-glow);
+  padding-top: 14px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 520px) {
+  .modal__dialog {
+    padding: 16px;
+    gap: 14px;
+  }
+  .modal__title {
+    font-size: 1.15rem;
+  }
+}
