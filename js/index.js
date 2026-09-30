@@ -2,6 +2,7 @@ import { createElement } from './utils/dom.js';
 import { createHeader } from './components/header.js';
 import { createStatusPanel } from './components/status.js';
 import { createBoard } from './components/board.js';
+import { createModal } from './components/modal.js';
 
 const ITEMS = [
   { key: 'blink-dagger', name: 'Blink Dagger', image: './assets/items/blink.png' },
@@ -21,11 +22,16 @@ const initApp = () => {
   let moves = 0;
   let matches = 0;
   let mismatchTimeoutId = null;
+  let winTimeoutId = null;
 
   const resetGame = () => {
     if (mismatchTimeoutId) {
       clearTimeout(mismatchTimeoutId);
       mismatchTimeoutId = null;
+    }
+    if (winTimeoutId) {
+      clearTimeout(winTimeoutId);
+      winTimeoutId = null;
     }
     firstCard = null;
     secondCard = null;
@@ -34,6 +40,57 @@ const initApp = () => {
     matches = 0;
     statusPanel.reset();
     board.render();
+  };
+
+  const showWinModal = (finalMoves) => {
+    const text = createElement('p', {
+      className: 'win-modal__text',
+      text: 'Congratulations! You have restored all 8 ancient artifacts!',
+    });
+
+    const label = createElement('span', {
+      className: 'win-modal__label',
+      text: 'TOTAL MOVES:',
+    });
+
+    const value = createElement('span', {
+      className: 'win-modal__value',
+      text: String(finalMoves),
+    });
+
+    const scorePlaque = createElement('div', {
+      className: 'win-modal__score',
+      children: [label, value],
+    });
+
+    const content = createElement('div', {
+      className: 'win-modal__content',
+      children: [text, scorePlaque],
+    });
+
+    const modal = createModal({
+      title: 'VICTORY!',
+      content,
+      buttons: [
+        {
+          text: 'PLAY AGAIN',
+          className: 'btn--new-game',
+          onClick: (_, { close }) => {
+            close();
+            resetGame();
+          },
+        },
+        {
+          text: 'CLOSE',
+          className: 'btn--leaderboard',
+          onClick: (_, { close }) => {
+            close();
+          },
+        },
+      ],
+    });
+
+    modal.open();
   };
 
   const handleCardClick = (card) => {
@@ -57,6 +114,13 @@ const initApp = () => {
       statusPanel.setMatches(matches);
       firstCard = null;
       secondCard = null;
+
+      if (matches === 8) {
+        winTimeoutId = setTimeout(() => {
+          showWinModal(moves);
+          winTimeoutId = null;
+        }, 500);
+      }
     } else {
       isLocked = true;
       board.lock();
@@ -74,7 +138,7 @@ const initApp = () => {
 
   const header = createHeader({
     onNewGame: resetGame,
-    onLeaderboard: () => {},
+    onLeaderboard: () => { },
   });
 
   const statusPanel = createStatusPanel();
