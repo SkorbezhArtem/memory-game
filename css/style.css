@@ -428,7 +428,13 @@ body {
   box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
 }
 
-.card.is-locked {
+.card.is-matched {
+  pointer-events: none;
+}
+
+.card.is-locked,
+.board.is-locked .card {
+  pointer-events: none;
   cursor: not-allowed;
 }
 

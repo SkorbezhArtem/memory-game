@@ -15,10 +15,65 @@ const ITEMS = [
 ];
 
 const initApp = () => {
+  let firstCard = null;
+  let secondCard = null;
+  let isLocked = false;
+  let moves = 0;
+  let matches = 0;
+  let mismatchTimeoutId = null;
+
+  const resetGame = () => {
+    if (mismatchTimeoutId) {
+      clearTimeout(mismatchTimeoutId);
+      mismatchTimeoutId = null;
+    }
+    firstCard = null;
+    secondCard = null;
+    isLocked = false;
+    moves = 0;
+    matches = 0;
+    statusPanel.reset();
+    board.render();
+  };
+
+  const handleCardClick = (card) => {
+    if (isLocked || card.isMatched() || card === firstCard) return;
+
+    card.flip();
+
+    if (!firstCard) {
+      firstCard = card;
+      return;
+    }
+
+    secondCard = card;
+    moves += 1;
+    statusPanel.setMoves(moves);
+
+    if (firstCard.key === secondCard.key) {
+      firstCard.match();
+      secondCard.match();
+      matches += 1;
+      statusPanel.setMatches(matches);
+      firstCard = null;
+      secondCard = null;
+    } else {
+      isLocked = true;
+      board.lock();
+      mismatchTimeoutId = setTimeout(() => {
+        firstCard?.unflip();
+        secondCard?.unflip();
+        firstCard = null;
+        secondCard = null;
+        isLocked = false;
+        board.unlock();
+        mismatchTimeoutId = null;
+      }, 1000);
+    }
+  };
+
   const header = createHeader({
-    onNewGame: () => {
-      board.render();
-    },
+    onNewGame: resetGame,
     onLeaderboard: () => {},
   });
 
@@ -26,13 +81,7 @@ const initApp = () => {
 
   const board = createBoard({
     items: ITEMS,
-    onCardClick: (clickedCard) => {
-      if (!clickedCard.isFlipped()) {
-        clickedCard.flip();
-      } else {
-        clickedCard.unflip();
-      }
-    },
+    onCardClick: handleCardClick,
   });
 
   const boardContainer = createElement('main', {
