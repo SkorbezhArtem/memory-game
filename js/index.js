@@ -1,7 +1,7 @@
 import { createElement } from './utils/dom.js';
 import { createHeader } from './components/header.js';
 import { createStatusPanel } from './components/status.js';
-import { createCard } from './components/card.js';
+import { createBoard } from './components/board.js';
 
 const ITEMS = [
   { key: 'blink-dagger', name: 'Blink Dagger', image: './assets/items/blink.png' },
@@ -16,40 +16,29 @@ const ITEMS = [
 
 const initApp = () => {
   const header = createHeader({
-    onNewGame: () => {},
+    onNewGame: () => {
+      board.render();
+    },
     onLeaderboard: () => {},
   });
 
   const statusPanel = createStatusPanel();
 
-  const board = createElement('div', {
-    className: 'board',
-    attributes: { 'aria-label': 'Card grid 4 by 4' },
-  });
-
-  const cardPairs = [...ITEMS, ...ITEMS];
-
-  cardPairs.forEach((item, index) => {
-    const card = createCard({
-      id: index,
-      key: item.key,
-      name: item.name,
-      image: item.image,
-      onCardClick: (clickedCard) => {
-        if (!clickedCard.isFlipped()) {
-          clickedCard.flip();
-        } else {
-          clickedCard.unflip();
-        }
-      },
-    });
-    board.appendChild(card.element);
+  const board = createBoard({
+    items: ITEMS,
+    onCardClick: (clickedCard) => {
+      if (!clickedCard.isFlipped()) {
+        clickedCard.flip();
+      } else {
+        clickedCard.unflip();
+      }
+    },
   });
 
   const boardContainer = createElement('main', {
     className: 'board-container',
     attributes: { 'aria-label': 'Game board' },
-    children: [board],
+    children: [board.element],
   });
 
   const footer = createElement('footer', {
