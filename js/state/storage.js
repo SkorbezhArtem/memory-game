@@ -1,17 +1,17 @@
 const STORAGE_KEY = 'dota2_memory_game_leaderboard';
 
+const compareScores = (a, b) =>
+  a.moves !== b.moves
+    ? a.moves - b.moves
+    : (a.timestamp || 0) - (b.timestamp || 0);
+
 export const getLeaderboard = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.sort((a, b) => {
-      if (a.moves !== b.moves) {
-        return a.moves - b.moves;
-      }
-      return (a.timestamp || 0) - (b.timestamp || 0);
-    }).slice(0, 10);
+    return parsed.sort(compareScores).slice(0, 10);
   } catch {
     return [];
   }
@@ -34,12 +34,7 @@ export const saveScore = ({ moves }) => {
 
     current.push(newRecord);
 
-    current.sort((a, b) => {
-      if (a.moves !== b.moves) {
-        return a.moves - b.moves;
-      }
-      return (a.timestamp || 0) - (b.timestamp || 0);
-    });
+    current.sort(compareScores);
 
     const top10 = current.slice(0, 10);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(top10));

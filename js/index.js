@@ -4,7 +4,7 @@ import { createStatusPanel } from './components/status.js';
 import { createBoard } from './components/board.js';
 import { createModal } from './components/modal.js';
 import { saveScore } from './state/storage.js';
-import { showLeaderboardModal } from './components/leaderboard.js';
+import { createLeaderboardModal } from './components/leaderboard.js';
 
 const ITEMS = [
   { key: 'blink-dagger', name: 'Blink Dagger', image: './assets/items/blink.png' },
@@ -16,6 +16,8 @@ const ITEMS = [
   { key: 'daedalus', name: 'Daedalus', image: './assets/items/daedalus.png' },
   { key: 'refresher-orb', name: 'Refresher Orb', image: './assets/items/refresher.png' },
 ];
+
+const TOTAL_PAIRS = ITEMS.length;
 
 const initApp = () => {
   let firstCard = null;
@@ -41,6 +43,7 @@ const initApp = () => {
     moves = 0;
     matches = 0;
     statusPanel.reset();
+    board.unlock();
     board.render();
   };
 
@@ -119,7 +122,7 @@ const initApp = () => {
       firstCard = null;
       secondCard = null;
 
-      if (matches === 8) {
+      if (matches === TOTAL_PAIRS) {
         winTimeoutId = setTimeout(() => {
           showWinModal(moves);
           winTimeoutId = null;
@@ -143,11 +146,11 @@ const initApp = () => {
   const header = createHeader({
     onNewGame: resetGame,
     onLeaderboard: () => {
-      showLeaderboardModal();
+      createLeaderboardModal().open();
     },
   });
 
-  const statusPanel = createStatusPanel();
+  const statusPanel = createStatusPanel({ totalPairs: TOTAL_PAIRS });
 
   const board = createBoard({
     items: ITEMS,
