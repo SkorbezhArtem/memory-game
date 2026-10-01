@@ -726,3 +726,46 @@ body {
   max-width: 320px;
   line-height: 1.5;
 }
+
+@media (max-width: 380px) {
+  body {
+    padding: 12px 8px;
+  }
+  .app {
+    gap: 10px;
+  }
+  .header {
+    padding: 12px;
+    gap: 10px;
+  }
+  .header__title {
+    font-size: 1.15rem;
+    letter-spacing: 1.5px;
+  }
+  .btn {
+    min-width: 110px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    gap: 6px;
+  }
+  .btn__icon {
+    width: 14px;
+    height: 14px;
+  }
+  .status-panel {
+    padding: 8px 12px;
+    gap: 14px;
+  }
+  .board {
+    gap: 6px;
+    padding: 8px;
+  }
+  .card__face--front {
+    padding: 3px;
+  }
+  .card__name {
+    margin-top: 2px;
+    font-size: 0.42rem;
+    padding: 1px;
+  }
+}
