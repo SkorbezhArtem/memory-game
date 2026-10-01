@@ -1,6 +1,6 @@
 import { createElement } from '../utils/dom.js';
 
-export const createStatusPanel = () => {
+export const createStatusPanel = ({ totalPairs = 8 } = {}) => {
   const movesValue = createElement('span', {
     className: 'status-panel__value',
     text: '0',
@@ -12,7 +12,7 @@ export const createStatusPanel = () => {
 
   const matchesValue = createElement('span', {
     className: 'status-panel__value',
-    text: '0 / 8',
+    text: '0 / ' + totalPairs,
     attributes: {
       'aria-live': 'polite',
       'aria-atomic': 'true',
@@ -54,7 +54,7 @@ export const createStatusPanel = () => {
   };
 
   const setMatches = (count) => {
-    matchesValue.textContent = count + ' / 8';
+    matchesValue.textContent = count + ' / ' + totalPairs;
   };
 
   const reset = () => {

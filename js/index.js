@@ -17,6 +17,8 @@ const ITEMS = [
   { key: 'refresher-orb', name: 'Refresher Orb', image: './assets/items/refresher.png' },
 ];
 
+const TOTAL_PAIRS = ITEMS.length;
+
 const initApp = () => {
   let firstCard = null;
   let secondCard = null;
@@ -120,7 +122,7 @@ const initApp = () => {
       firstCard = null;
       secondCard = null;
 
-      if (matches === 8) {
+      if (matches === TOTAL_PAIRS) {
         winTimeoutId = setTimeout(() => {
           showWinModal(moves);
           winTimeoutId = null;
@@ -148,7 +150,7 @@ const initApp = () => {
     },
   });
 
-  const statusPanel = createStatusPanel();
+  const statusPanel = createStatusPanel({ totalPairs: TOTAL_PAIRS });
 
   const board = createBoard({
     items: ITEMS,
