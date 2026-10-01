@@ -30,7 +30,6 @@ export const createBoard = ({ items = [], onCardClick } = {}) => {
     });
   };
 
-  const getCards = () => cards;
 
   const lock = () => {
     element.classList.add('is-locked');
@@ -40,19 +39,13 @@ export const createBoard = ({ items = [], onCardClick } = {}) => {
     element.classList.remove('is-locked');
   };
 
-  const reset = () => {
-    cards.forEach((card) => card.reset());
-    unlock();
-  };
 
   render();
 
   return {
     element,
     render,
-    getCards,
     lock,
     unlock,
-    reset,
   };
 };
