@@ -64,8 +64,6 @@ export const createStatusPanel = ({ totalPairs = 8 } = {}) => {
 
   return {
     element,
-    movesValue,
-    matchesValue,
     setMoves,
     setMatches,
     reset,

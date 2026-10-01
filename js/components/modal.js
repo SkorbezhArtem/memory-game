@@ -2,11 +2,12 @@ import { createElement } from '../utils/dom.js';
 
 export const createModal = ({ title = '', content = null, buttons = [], onClose } = {}) => {
   let isOpen = false;
+  const modalId = 'modal-title-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6);
 
   const titleEl = createElement('h2', {
     className: 'modal__title',
     text: title,
-    attributes: { id: 'modal-title' },
+    attributes: { id: modalId },
   });
 
   const closeBtn = createElement('button', {
@@ -36,6 +37,7 @@ export const createModal = ({ title = '', content = null, buttons = [], onClose 
     return createElement('button', {
       className: ['btn', btn.className || 'btn--new-game'],
       text: btn.text,
+      attributes: { type: 'button' },
       events: {
         click: (e) => {
           btn.onClick?.(e, { close });
@@ -72,7 +74,7 @@ export const createModal = ({ title = '', content = null, buttons = [], onClose 
     attributes: {
       role: 'dialog',
       'aria-modal': 'true',
-      'aria-labelledby': 'modal-title',
+      'aria-labelledby': modalId,
     },
     events: {
       click: handleBackdropClick,
