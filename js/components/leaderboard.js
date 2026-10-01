@@ -2,7 +2,7 @@ import { createElement } from '../utils/dom.js';
 import { getLeaderboard } from '../state/storage.js';
 import { createModal } from './modal.js';
 
-export const showLeaderboardModal = () => {
+export const createLeaderboardModal = () => {
   const records = getLeaderboard();
 
   let bodyContent;
@@ -97,6 +97,5 @@ export const showLeaderboardModal = () => {
     ],
   });
 
-  modal.open();
   return modal;
 };

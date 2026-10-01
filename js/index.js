@@ -4,7 +4,7 @@ import { createStatusPanel } from './components/status.js';
 import { createBoard } from './components/board.js';
 import { createModal } from './components/modal.js';
 import { saveScore } from './state/storage.js';
-import { showLeaderboardModal } from './components/leaderboard.js';
+import { createLeaderboardModal } from './components/leaderboard.js';
 
 const ITEMS = [
   { key: 'blink-dagger', name: 'Blink Dagger', image: './assets/items/blink.png' },
@@ -146,7 +146,7 @@ const initApp = () => {
   const header = createHeader({
     onNewGame: resetGame,
     onLeaderboard: () => {
-      showLeaderboardModal();
+      createLeaderboardModal().open();
     },
   });
 

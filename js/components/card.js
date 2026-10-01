@@ -46,17 +46,14 @@ export const createCard = ({ id, key, name, image, onCardClick } = {}) => {
     children: [frontFace, backFace],
   });
 
-  const card = {
-    id,
-    key: itemKey,
-    name,
-    image,
-    element: null,
-  };
+  let cardRef = null;
+
+  const isFlipped = () => element.classList.contains('is-flipped');
+  const isMatched = () => element.classList.contains('is-matched');
 
   const handleAction = () => {
-    if (card.isMatched() || card.isFlipped()) return;
-    onCardClick?.(card);
+    if (isMatched() || isFlipped()) return;
+    onCardClick?.(cardRef);
   };
 
   const element = createElement('div', {
@@ -83,30 +80,39 @@ export const createCard = ({ id, key, name, image, onCardClick } = {}) => {
     children: [inner],
   });
 
-  card.element = element;
-
-  card.flip = () => {
+  const flip = () => {
     element.classList.add('is-flipped');
     element.setAttribute('aria-label', name ? ('Card: ' + name) : 'Card: face up');
   };
 
-  card.unflip = () => {
+  const unflip = () => {
     element.classList.remove('is-flipped');
     element.setAttribute('aria-label', 'Card: face down');
   };
 
-  card.match = () => {
+  const match = () => {
     element.classList.add('is-matched');
     element.setAttribute('aria-label', name ? ('Matched card: ' + name) : 'Matched pair');
   };
 
-  card.isFlipped = () => element.classList.contains('is-flipped');
-  card.isMatched = () => element.classList.contains('is-matched');
-
-  card.reset = () => {
+  const reset = () => {
     element.classList.remove('is-flipped', 'is-matched');
     element.setAttribute('aria-label', 'Card: face down');
   };
 
-  return card;
+  cardRef = Object.freeze({
+    id,
+    key: itemKey,
+    name,
+    image,
+    element,
+    flip,
+    unflip,
+    match,
+    isFlipped,
+    isMatched,
+    reset,
+  });
+
+  return cardRef;
 };
