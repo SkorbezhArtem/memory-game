@@ -41,6 +41,7 @@ const initApp = () => {
     moves = 0;
     matches = 0;
     statusPanel.reset();
+    board.unlock();
     board.render();
   };
 
