@@ -48,8 +48,6 @@ const initApp = () => {
   };
 
   const showWinModal = (finalMoves) => {
-    saveScore({ moves: finalMoves });
-
     const text = createElement('p', {
       className: 'win-modal__text',
       text: 'Congratulations! You have restored all 8 ancient artifacts!',
@@ -123,6 +121,7 @@ const initApp = () => {
       secondCard = null;
 
       if (matches === TOTAL_PAIRS) {
+        saveScore({ moves });
         winTimeoutId = setTimeout(() => {
           showWinModal(moves);
           winTimeoutId = null;
