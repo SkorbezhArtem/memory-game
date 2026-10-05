@@ -30,6 +30,7 @@
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   font-family: var(--font-main);
   background-color: var(--bg-dark);
   background-image:
@@ -43,7 +44,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 24px 16px;
   overflow-x: hidden;
   line-height: 1.4;
@@ -214,9 +215,10 @@ body {
 .footer {
   margin-top: 12px;
   font-size: 0.8rem;
+  font-weight: 600;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-gold-bright);
   text-align: center;
 }
 
@@ -791,5 +793,17 @@ body {
     margin-top: 2px;
     font-size: 0.42rem;
     padding: 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

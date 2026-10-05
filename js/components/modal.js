@@ -129,21 +129,11 @@ export const createModal = ({ title = '', content = null, buttons = [], onClose 
     }, 250);
   };
 
-  const setContent = (newContent) => {
-    bodyEl.replaceChildren(...(Array.isArray(newContent) ? newContent : [newContent]));
-  };
-
-  const setTitle = (newTitle) => {
-    titleEl.textContent = newTitle;
-  };
-
   const api = {
     element: backdropEl,
     open,
     close,
     isOpen: () => isOpen,
-    setContent,
-    setTitle,
   };
 
   return api;

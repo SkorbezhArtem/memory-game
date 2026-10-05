@@ -3,8 +3,6 @@ import { shuffle } from '../utils/shuffle.js';
 import { createCard } from './card.js';
 
 export const createBoard = ({ items = [], onCardClick } = {}) => {
-  let cards = [];
-
   const element = createElement('div', {
     className: 'board',
     attributes: { 'aria-label': 'Card grid 4 by 4' },
@@ -12,7 +10,6 @@ export const createBoard = ({ items = [], onCardClick } = {}) => {
 
   const render = () => {
     clearElement(element);
-    cards = [];
 
     const pairs = [...items, ...items];
     const shuffledPairs = shuffle(pairs);
@@ -25,7 +22,6 @@ export const createBoard = ({ items = [], onCardClick } = {}) => {
         image: item.image,
         onCardClick,
       });
-      cards.push(card);
       element.appendChild(card.element);
     });
   };
