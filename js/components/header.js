@@ -68,7 +68,5 @@ export const createHeader = ({ onNewGame, onLeaderboard } = {}) => {
 
   return {
     element,
-    newGameBtn,
-    leaderboardBtn,
   };
 };

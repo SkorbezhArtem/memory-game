@@ -1,7 +1,11 @@
 import { createElement } from '../utils/dom.js';
 
+let activeModal = null;
+const getAppRoot = () => document.querySelector('.app');
+
 export const createModal = ({ title = '', content = null, buttons = [], onClose } = {}) => {
   let isOpen = false;
+  let previouslyFocused = null;
   const modalId = 'modal-title-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6);
 
   const titleEl = createElement('h2', {
@@ -84,12 +88,23 @@ export const createModal = ({ title = '', content = null, buttons = [], onClose 
 
   const open = () => {
     if (isOpen) return;
+
+    if (activeModal && activeModal !== api) {
+      activeModal.close();
+    }
+    activeModal = api;
+
     isOpen = true;
+    previouslyFocused = document.activeElement;
+
+    getAppRoot()?.setAttribute('inert', '');
+
     document.body.appendChild(backdropEl);
     document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', handleKeydown);
     requestAnimationFrame(() => {
       backdropEl.classList.add('is-open');
+      closeBtn.focus();
     });
   };
 
@@ -97,7 +112,14 @@ export const createModal = ({ title = '', content = null, buttons = [], onClose 
     if (!isOpen) return;
     isOpen = false;
     backdropEl.classList.remove('is-open');
-    document.body.style.overflow = '';
+
+    if (activeModal === api) {
+      activeModal = null;
+      document.body.style.overflow = '';
+      getAppRoot()?.removeAttribute('inert');
+      previouslyFocused?.focus?.();
+    }
+
     document.removeEventListener('keydown', handleKeydown);
     onClose?.();
     setTimeout(() => {
@@ -107,20 +129,12 @@ export const createModal = ({ title = '', content = null, buttons = [], onClose 
     }, 250);
   };
 
-  const setContent = (newContent) => {
-    bodyEl.replaceChildren(...(Array.isArray(newContent) ? newContent : [newContent]));
-  };
-
-  const setTitle = (newTitle) => {
-    titleEl.textContent = newTitle;
-  };
-
-  return {
+  const api = {
     element: backdropEl,
     open,
     close,
     isOpen: () => isOpen,
-    setContent,
-    setTitle,
   };
+
+  return api;
 };

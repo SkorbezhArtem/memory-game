@@ -95,11 +95,6 @@ export const createCard = ({ id, key, name, image, onCardClick } = {}) => {
     element.setAttribute('aria-label', name ? ('Matched card: ' + name) : 'Matched pair');
   };
 
-  const reset = () => {
-    element.classList.remove('is-flipped', 'is-matched');
-    element.setAttribute('aria-label', 'Card: face down');
-  };
-
   cardRef = Object.freeze({
     id,
     key: itemKey,
@@ -111,7 +106,6 @@ export const createCard = ({ id, key, name, image, onCardClick } = {}) => {
     match,
     isFlipped,
     isMatched,
-    reset,
   });
 
   return cardRef;
